@@ -1,0 +1,14 @@
+#!/bin/sh
+MVNW_REPOURL=https://repo.maven.apache.org/maven2
+MVNW_VERSION=3.9.6
+MVNW_BASEDIR="$(cd "$(dirname "$0")"; pwd -P)"
+MVNW_JAR="$MVNW_BASEDIR/.mvn/wrapper/maven-wrapper.jar"
+
+if [ ! -f "$MVNW_JAR" ]; then
+  echo "Downloading Maven Wrapper..."
+  mkdir -p "$MVNW_BASEDIR/.mvn/wrapper"
+  curl -o "$MVNW_JAR" https://repo.maven.apache.org/maven2/io/takari/maven-wrapper/0.5.6/maven-wrapper-0.5.6.jar
+fi
+
+JAVA_EXE=java
+exec "$JAVA_EXE" -jar "$MVNW_JAR" "$@"

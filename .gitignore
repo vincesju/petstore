@@ -1,0 +1,9 @@
+# Petstore Root .gitignore
+/.DS_Store
+/node_modules/
+/dist/
+/build/
+/.env*
+/.vscode/
+/.idea/
+*.log

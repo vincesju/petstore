@@ -1,0 +1,4 @@
+# Maven Wrapper JAR
+# This file is required for the Maven Wrapper to work. It is a binary file and should be downloaded from the official Maven Wrapper repository.
+# Download URL: https://repo.maven.apache.org/maven2/io/takari/maven-wrapper/3.3.9/maven-wrapper-3.3.9.jar
+# Place the downloaded file at: backend/.mvn/wrapper/maven-wrapper.jar

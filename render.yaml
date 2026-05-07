@@ -1,0 +1,22 @@
+# Render YAML for Pet Browsing Only
+services:
+  - type: web
+    name: petstore-backend
+    env: docker
+    plan: free
+    buildFilter:
+      paths:
+        - backend/**
+  - type: web
+    name: petstore-frontend
+    env: docker
+    plan: free
+    buildFilter:
+      paths:
+        - frontend/**
+  - type: pserv
+    name: petstore-db
+    env: docker
+    plan: free
+    buildCommand: ''
+    startCommand: ''
