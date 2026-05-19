@@ -55,7 +55,18 @@ const BrowsePets = () => {
   return (
     <main className="app-shell">
       <Container maxWidth="lg" className="browse-container">
-        <h1 className="page-title">Browse Pets</h1>
+        <header className="hero-header">
+          <div className="hero-brand-row">
+            <img src="/petstore-logo.png" alt="Pet Store logo" className="brand-logo-image" />
+            <div>
+              <p className="brand-overline">Adopt. Love. Repeat.</p>
+              <h1 className="page-title">Pet Store</h1>
+            </div>
+          </div>
+          <p className="hero-subtitle">
+            Find your next furry, feathery, or scaly best friend from our handpicked companions.
+          </p>
+        </header>
         <TextField
           fullWidth
           value={search}
