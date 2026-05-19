@@ -3,13 +3,14 @@ import PetGallery from '../components/PetGallery';
 import CategoryFilter from '../components/CategoryFilter';
 import PetDetails from '../components/PetDetails';
 import { fetchPets } from '../services/api';
-import { CircularProgress, Alert, Container } from '@mui/material';
+import { CircularProgress, Alert, Container, TextField } from '@mui/material';
 
 const BrowsePets = () => {
   const [pets, setPets] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [category, setCategory] = useState('ALL');
+  const [search, setSearch] = useState('');
   const [selectedPet, setSelectedPet] = useState(null);
   const [detailsOpen, setDetailsOpen] = useState(false);
 
@@ -42,16 +43,37 @@ const BrowsePets = () => {
     setSelectedPet(null);
   };
 
+  const filteredPets = pets.filter((pet) => {
+    const searchValue = search.trim().toLowerCase();
+    if (!searchValue) return true;
+
+    return [pet.name, pet.category, pet.description]
+      .filter(Boolean)
+      .some((value) => String(value).toLowerCase().includes(searchValue));
+  });
+
   return (
-    <Container maxWidth="md" className="py-8">
-      <CategoryFilter selected={category} onSelect={setCategory} />
-      {loading && <div className="flex justify-center my-8"><CircularProgress /></div>}
-      {error && <Alert severity="error" className="my-4">{error}</Alert>}
-      {!loading && !error && (
-        <PetGallery pets={pets} onSelect={handleSelectPet} />
-      )}
-      <PetDetails pet={selectedPet} open={detailsOpen} onClose={handleCloseDetails} />
-    </Container>
+    <main className="app-shell">
+      <Container maxWidth="lg" className="browse-container">
+        <h1 className="page-title">Browse Pets</h1>
+        <TextField
+          fullWidth
+          value={search}
+          onChange={(event) => setSearch(event.target.value)}
+          placeholder="Search pets"
+          variant="outlined"
+          className="search-field"
+          inputProps={{ 'aria-label': 'Search pets' }}
+        />
+        <CategoryFilter selected={category} onSelect={setCategory} />
+        {loading && <div className="loading-state"><CircularProgress /></div>}
+        {error && <Alert severity="error" className="my-4">{error}</Alert>}
+        {!loading && !error && (
+          <PetGallery pets={filteredPets} onSelect={handleSelectPet} />
+        )}
+        <PetDetails pet={selectedPet} open={detailsOpen} onClose={handleCloseDetails} />
+      </Container>
+    </main>
   );
 };
 

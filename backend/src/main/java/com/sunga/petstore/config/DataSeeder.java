@@ -19,26 +19,24 @@ public class DataSeeder implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        if (petRepository.count() > 0) {
-            return;
-        }
+        petRepository.deleteAll();
 
         petRepository.saveAll(List.of(
-                pet("Buddy", Category.DOG, "7500.00",
+                pet("Golden Retriever", Category.DOG, "850.00",
                         "https://images.unsplash.com/photo-1552053831-71594a27632d?auto=format&fit=crop&w=800&q=80",
-                        "Friendly golden retriever who loves walks and playtime."),
-                pet("Mochi", Category.CAT, "4200.00",
+                        "Popular family dog known for being friendly, trainable, and gentle with children."),
+                pet("Persian Cat", Category.CAT, "700.00",
                         "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&w=800&q=80",
-                        "Calm tabby cat with a soft coat and curious personality."),
-                pet("Sunny", Category.BIRD, "1800.00",
+                        "Long-haired indoor cat with a calm temperament and high grooming needs."),
+                pet("Budgerigar", Category.BIRD, "35.00",
                         "https://images.unsplash.com/photo-1522926193341-e9ffd686c60f?auto=format&fit=crop&w=800&q=80",
-                        "Bright parakeet that enjoys gentle handling."),
-                pet("Nemo", Category.FISH, "350.00",
+                        "Small parakeet often kept as a beginner-friendly companion bird."),
+                pet("Betta Fish", Category.FISH, "12.00",
                         "https://images.unsplash.com/photo-1522069169874-c58ec4b76be5?auto=format&fit=crop&w=800&q=80",
-                        "Colorful aquarium fish for a peaceful tank."),
-                pet("Spike", Category.REPTILE, "2600.00",
+                        "Colorful freshwater fish commonly kept in small planted aquariums."),
+                pet("Leopard Gecko", Category.REPTILE, "75.00",
                         "https://images.unsplash.com/photo-1542332213-31f87348057f?auto=format&fit=crop&w=800&q=80",
-                        "Easygoing bearded dragon with beginner-friendly care needs.")
+                        "Hardy beginner reptile with simple care requirements and a calm nature.")
         ));
     }
 

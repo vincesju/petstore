@@ -1,27 +1,26 @@
 import React from 'react';
-import { Button, ButtonGroup } from '@mui/material';
-
 const categories = [
-  { label: 'All', value: 'ALL' },
-  { label: 'Dogs', value: 'DOG' },
-  { label: 'Cats', value: 'CAT' },
-  { label: 'Birds', value: 'BIRD' },
-  { label: 'Reptiles', value: 'REPTILE' },
-  { label: 'Fishes', value: 'FISH' },
+  { label: 'ALL', value: 'ALL' },
+  { label: 'CATS', value: 'CAT' },
+  { label: 'DOGS', value: 'DOG' },
+  { label: 'FISH', value: 'FISH' },
+  { label: 'BIRDS', value: 'BIRD' },
+  { label: 'REPTILES', value: 'REPTILE' },
 ];
 
 const CategoryFilter = ({ selected, onSelect }) => (
-  <ButtonGroup variant="outlined" className="mb-6">
+  <div className="category-tabs" aria-label="Pet categories">
     {categories.map((cat) => (
-      <Button
+      <button
+        type="button"
         key={cat.value}
-        variant={selected === cat.value ? 'contained' : 'outlined'}
+        className={`category-tab ${selected === cat.value ? 'category-tab-active' : ''}`}
         onClick={() => onSelect(cat.value)}
       >
         {cat.label}
-      </Button>
+      </button>
     ))}
-  </ButtonGroup>
+  </div>
 );
 
 export default CategoryFilter;
