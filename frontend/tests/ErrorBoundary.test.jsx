@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import ErrorBoundary from '../components/ErrorBoundary';
+import ErrorBoundary from '../src/components/ErrorBoundary';
 
 describe('ErrorBoundary', () => {
   it('renders children when no error', () => {

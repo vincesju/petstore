@@ -1,22 +1,60 @@
-# Render YAML for Pet Browsing Only
 services:
   - type: web
-    name: petstore-backend
-    env: docker
+    name: petstore-api
     plan: free
-    buildFilter:
-      paths:
-        - backend/**
+    env: docker
+    dockerContext: ./backend
+    dockerfilePath: ./backend/Dockerfile
+    envVars:
+      - key: SPRING_PROFILES_ACTIVE
+        value: prod
+      - key: DB_HOST
+        fromDatabase:
+          name: petstore-db
+          property: host
+      - key: DB_PORT
+        fromDatabase:
+          name: petstore-db
+          property: port
+      - key: DB_NAME
+        fromDatabase:
+          name: petstore-db
+          property: database
+      - key: SPRING_DATASOURCE_USERNAME
+        fromDatabase:
+          name: petstore-db
+          property: user
+      - key: SPRING_DATASOURCE_PASSWORD
+        fromDatabase:
+          name: petstore-db
+          property: password
+      - key: DB_SSL_MODE
+        value: require
+      - key: CORS_ALLOWED_ORIGINS
+        fromService:
+          type: web
+          name: petstore-web
+          envVarKey: RENDER_EXTERNAL_URL
+
   - type: web
-    name: petstore-frontend
-    env: docker
+    name: petstore-web
+    env: static
+    rootDir: frontend
+    buildCommand: npm ci && npm run build
+    staticPublishPath: dist
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+    envVars:
+      - key: VITE_API_BASE_URL
+        fromService:
+          type: web
+          name: petstore-api
+          envVarKey: RENDER_EXTERNAL_URL
+
+databases:
+  - name: petstore-db
     plan: free
-    buildFilter:
-      paths:
-        - frontend/**
-  - type: pserv
-    name: petstore-db
-    env: docker
-    plan: free
-    buildCommand: ''
-    startCommand: ''
+    databaseName: petstore
+    user: petstore

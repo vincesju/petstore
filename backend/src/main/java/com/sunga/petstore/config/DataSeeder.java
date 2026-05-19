@@ -1,0 +1,54 @@
+package com.sunga.petstore.config;
+
+import com.sunga.petstore.model.Category;
+import com.sunga.petstore.model.Pet;
+import com.sunga.petstore.repository.PetRepository;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.stereotype.Component;
+
+import java.math.BigDecimal;
+import java.util.List;
+
+@Component
+public class DataSeeder implements CommandLineRunner {
+    private final PetRepository petRepository;
+
+    public DataSeeder(PetRepository petRepository) {
+        this.petRepository = petRepository;
+    }
+
+    @Override
+    public void run(String... args) {
+        if (petRepository.count() > 0) {
+            return;
+        }
+
+        petRepository.saveAll(List.of(
+                pet("Buddy", Category.DOG, "7500.00",
+                        "https://images.unsplash.com/photo-1552053831-71594a27632d?auto=format&fit=crop&w=800&q=80",
+                        "Friendly golden retriever who loves walks and playtime."),
+                pet("Mochi", Category.CAT, "4200.00",
+                        "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&w=800&q=80",
+                        "Calm tabby cat with a soft coat and curious personality."),
+                pet("Sunny", Category.BIRD, "1800.00",
+                        "https://images.unsplash.com/photo-1522926193341-e9ffd686c60f?auto=format&fit=crop&w=800&q=80",
+                        "Bright parakeet that enjoys gentle handling."),
+                pet("Nemo", Category.FISH, "350.00",
+                        "https://images.unsplash.com/photo-1522069169874-c58ec4b76be5?auto=format&fit=crop&w=800&q=80",
+                        "Colorful aquarium fish for a peaceful tank."),
+                pet("Spike", Category.REPTILE, "2600.00",
+                        "https://images.unsplash.com/photo-1542332213-31f87348057f?auto=format&fit=crop&w=800&q=80",
+                        "Easygoing bearded dragon with beginner-friendly care needs.")
+        ));
+    }
+
+    private Pet pet(String name, Category category, String price, String imageUrl, String description) {
+        Pet pet = new Pet();
+        pet.setName(name);
+        pet.setCategory(category);
+        pet.setPrice(new BigDecimal(price));
+        pet.setImageUrl(imageUrl);
+        pet.setDescription(description);
+        return pet;
+    }
+}
